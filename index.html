@@ -1,76 +1,144 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>7S-RAPPORT RPAS</title>
+
+  <!-- jsPDF för PDF-export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <meta charset="UTF-8">
-  <title>7S-RAPPORT MRPAS</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-  <h1>7S-RAPPORT MRPAS</h1>
 
-  <form id="rapportForm">
-    <fieldset>
-      <legend>🎯 Spaningsfråga</legend>
-      <textarea id="spaningsfraga" placeholder="Vad vill vi få svar på med denna spaning?"></textarea>
-    </fieldset>
+  <style>
+    :root {
+      --bg: #f7f7f7;
+      --card: #ffffff;
+      --primary: #0f5132;   /* olivgrön känsla */
+      --text: #222;
+      --muted: #666;
+      --border: #dcdcdc;
+      --accent: #2a6f3e;
+    }
 
-    <fieldset>
-      <legend>1. 🕒 Stund</legend>
-      <small>Tidpunkt – När observationen gjordes (ex: 121500Z)</small>
-      <textarea id="stund"></textarea>
-    </fieldset>
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      line-height: 1.4;
+    }
 
-    <fieldset>
-      <legend>2. 📍 Ställe</legend>
-      <small>Plats – Var observationen gjordes (ex: väg B–C, MGRS XX1234)</small>
-      <textarea id="stalle"></textarea>
-    </fieldset>
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 16px;
+    }
 
-    <fieldset>
-      <legend>3. 👥 Styrka</legend>
-      <small>Antal – Hur många som observerades (ex: 2 fordon, 6 personer)</small>
-      <textarea id="styrka"></textarea>
-    </fieldset>
+    header.header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
 
-    <fieldset>
-      <legend>4. 🚛 Slag</legend>
-      <small>Typ – Modell av fordon, truppslag eller händelsetyp (ex: pansarterrängbil, infanteri)</small>
-      <textarea id="slag"></textarea>
-    </fieldset>
+    .header-img {
+      max-height: 90px;
+      width: auto;
+      object-fit: contain;
+      border-radius: 8px;
+    }
 
-    <fieldset>
-      <legend>5. ⚙️ Sysselsättning</legend>
-      <small>Aktivitet – Vad de gjorde (ex: lastar materiel, marschförberedelser)</small>
-      <textarea id="sysselsattning"></textarea>
-    </fieldset>
+    h1 {
+      font-size: 1.6rem;
+      color: var(--primary);
+      margin: 16px 0 8px;
+    }
 
-    <fieldset>
-      <legend>6. 🏷️ Symbol</legend>
-      <small>Märkning – Nummer, färg, emblem, utseende (ex: blå markering, siffror på fordon)</small>
-      <textarea id="symbol"></textarea>
-    </fieldset>
+    form {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
 
-    <fieldset>
-      <legend>7. 🧑‍✈️ Sagesman</legend>
-      <small>Vem – Vem som gjort iakttagelsen (ex: RPAS-pilot Alfa, ANAFI USA)</small>
-      <textarea id="sagesman"></textarea>
-    </fieldset>
+    fieldset {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      margin: 10px 0 14px;
+      background: #fff;
+    }
 
-    <button type="button" onclick="exportReport()">📤 Exportera rapport</button>
-    <button type="button" onclick="exportPDF(JSON.parse(document.getElementById('output').textContent))">
-  📄 Exportera som PDF
-</button>
-  </form>
+    legend {
+      font-weight: 600;
+      color: var(--primary);
+      padding: 0 6px;
+    }
 
-  <button onclick="startVoice()">🎤 Röstinmatning</<
-  <pre id="output"></pre>
+    small {
+      color: var(--muted);
+      display: block;
+      margin-bottom: 8px;
+    }
 
-  <script src="script.js"></script>
-  <fieldset>
-  <legend>📎 Bilaga</legend>
-  <small>Lägg till en bild eller fil som hör till rapporten</small><br>
-  <input type="file" id="bilaga" accept="image/*,.pdf,.doc,.txt">
-</fieldset>
+    .row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: start;
+    }
 
-</body>
-</html>
+    textarea, input[type="text"] {
+      font-size: 1.2em; /* lika stor som rubriker */
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      width: 100%;
+      background: #fafafa;
+    }
+
+    /* Spaningsfrågan 200% större i nederkant */
+    #spaningsfraga {
+      font-size: 1.2em;
+      padding: 32px;       /* 200% jämfört med 16px baseline */
+      min-height: 200px;   /* visuellt större */
+      line-height: 1.5;
+      background: #f5fff7; /* lätt grön ton för att sticka ut */
+      border-color: #cfe6d5;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    pre#output {
+      background: #111;
+      color: #d6f3da;
+      padding: 12px;
+      border-radius: 10px;
+      overflow: auto;
+      border: 1px solid #333;
+      min-height: 120px;
+      font-size: 0.95em;
+   
