@@ -57,6 +57,9 @@
     </fieldset>
 
     <button type="button" onclick="exportReport()">📤 Exportera rapport</button>
+    <button type="button" onclick="exportPDF(JSON.parse(document.getElementById('output').textContent))">
+  📄 Exportera som PDF
+</button>
   </form>
 
   <button onclick="startVoice()">🎤 Röstinmatning</<hr>
