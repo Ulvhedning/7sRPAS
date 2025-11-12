@@ -141,3 +141,27 @@ async function exportPDF(rapport) {
     doc.save(`${rapport.id}.pdf`);
   };
 }
+function exportReport() {
+  const rapport = {
+    id: generateReportId(),
+    spaningsfraga: document.getElementById("spaningsfraga").value,
+    stund: document.getElementById("stund").value,
+    stalle: document.getElementById("stalle").value,
+    styrka: document.getElementById("styrka").value,
+    slag: document.getElementById("slag").value,
+    sysselsattning: document.getElementById("sysselsattning").value,
+    symbol: document.getElementById("symbol").value,
+    sagesman: document.getElementById("sagesman").value,
+    timestamp: new Date().toISOString()
+  };
+
+  // Bilaga
+  const fileInput = document.getElementById("bilaga");
+  if (fileInput.files.length > 0) {
+    rapport.bilaga = fileInput.files[0].name; // sparar filnamnet
+  }
+
+  document.getElementById("output").textContent = JSON.stringify(rapport, null, 2);
+
+  createShareButtons(rapport);
+}
