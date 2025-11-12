@@ -48,6 +48,11 @@ function exportReport() {
   if (fileInput && fileInput.files.length > 0) {
     rapport.bilaga = fileInput.files[0].name;
   }
+.header-img {
+  max-height: 100px;
+  object-fit: contain;
+  border-radius: 8px;
+}
 
   // Visa rapport
   document.getElementById("output").textContent = JSON.stringify(rapport, null, 2);
