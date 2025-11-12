@@ -7,18 +7,61 @@
 </head>
 <body>
   <h1>7S-RAPPORT RPAS</h1>
+
   <form id="rapportForm">
-    <label>Sektor:<textarea id="sektor"></textarea></label>
-    <label>Styrka:<textarea id="styrka"></textarea></label>
-    <label>Ställning:<textarea id="stallning"></textarea></label>
-    <label>Sysselsättning:<textarea id="sysselsattning"></textarea></label>
-    <label>Särskilt:<textarea id="sarskilt"></textarea></label>
-    <label>Slutsats:<textarea id="slutsats"></textarea></label>
-    <label>Signatur:<textarea id="signatur"></textarea></label>
-    <button type="button" onclick="exportReport()">Exportera rapport</button>
+    <fieldset>
+      <legend>🎯 Spaningsfråga</legend>
+      <textarea id="spaningsfraga" placeholder="Vad vill vi få svar på med denna spaning?"></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>1. 🕒 Stund</legend>
+      <small>Tidpunkt – När observationen gjordes (ex: 121500Z)</small>
+      <textarea id="stund"></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>2. 📍 Ställe</legend>
+      <small>Plats – Var observationen gjordes (ex: väg B–C, MGRS XX1234)</small>
+      <textarea id="stalle"></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>3. 👥 Styrka</legend>
+      <small>Antal – Hur många som observerades (ex: 2 fordon, 6 personer)</small>
+      <textarea id="styrka"></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>4. 🚛 Slag</legend>
+      <small>Typ – Modell av fordon, truppslag eller händelsetyp (ex: pansarterrängbil, infanteri)</small>
+      <textarea id="slag"></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>5. ⚙️ Sysselsättning</legend>
+      <small>Aktivitet – Vad de gjorde (ex: lastar materiel, marschförberedelser)</small>
+      <textarea id="sysselsattning"></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>6. 🏷️ Symbol</legend>
+      <small>Märkning – Nummer, färg, emblem, utseende (ex: blå markering, siffror på fordon)</small>
+      <textarea id="symbol"></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>7. 🧑‍✈️ Sagesman</legend>
+      <small>Vem – Vem som gjort iakttagelsen (ex: RPAS-pilot Alfa, ANAFI USA)</small>
+      <textarea id="sagesman"></textarea>
+    </fieldset>
+
+    <button type="button" onclick="exportReport()">📤 Exportera rapport</button>
   </form>
+
   <button onclick="startVoice()">🎤 Röstinmatning</button>
   <pre id="output"></pre>
+
   <script src="script.js"></script>
 </body>
 </html>
