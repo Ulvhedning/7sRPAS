@@ -14,3 +14,19 @@ textarea {
   padding: 40px; /* 200% större innermarginal */
   font-size: 1.2em;
 }
+/* Gör alla textfält lika stora som rubrikerna */
+textarea {
+  font-size: 1.2em;   /* samma storlek som rubriker */
+  padding: 20px;      /* större innermarginal */
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+}
+
+/* Gör spaningsfrågeformuläret 200% större i nedre kant */
+#spaningsfraga {
+  font-size: 1.2em;   /* lika stor som rubriker */
+  padding: 40px;      /* 200% större innermarginal */
+  min-height: 200px;  /* gör rutan visuellt större */
+  line-height: 1.4;   /* bättre läsbarhet */
+}
