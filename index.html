@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>7S-RAPPORT RPAS</title>
+  <title>7S-RAPPORT MRPAS</title>
 
   <!-- jsPDF för PDF-export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -161,7 +161,7 @@
     <!-- Header med logga/foto: ersätt src med din faktiska fil/URL -->
     <header class="header">
       <!-- Tips: lägg bilden i repo och referera som ./assets/mrpas-operator.png -->
-      <img src="./header-operator.png" alt="MRPAS Operatör" class="header-img" />
+      <img src="./mrpas-operator.png" alt="MRPAS Operatör" class="header-img" />
       <!-- Du kan även lägga till befälhavare-emblem bredvid om du vill -->
       <!-- <img src="./header-befalhavare.png" alt="MRPAS Befälhavare" class="header-img" /> -->
     </header>
@@ -336,7 +336,7 @@
     // ===== Formatera rapporttext för delning (mail/SMS/print) =====
     function formatReportText(rapport) {
       return `
-🛰️ 7S-RAPPORT RPAS
+🛰️ 7S-RAPPORT MRPAS
 📌 ID: ${rapport.id}
 📅 Tidpunkt: ${rapport.stund}
 📍 Plats: ${rapport.stalle}
